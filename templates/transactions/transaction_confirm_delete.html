@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Supprimer | FinTrack{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-danger text-white fw-bold">
+                Confirmer la suppression
+            </div>
+            <div class="card-body">
+                <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+                <div class="alert alert-warning">
+                    {% if is_transfer %}
+                        <strong>Virement</strong> : {{ transaction.amount|floatformat:2 }} MAD de {{ transaction.from_account }} vers {{ transaction.to_account }}
+                    {% else %}
+                        <strong>{{ transaction.date }}</strong> : {{ transaction.amount|floatformat:2 }} MAD ({{ transaction.category }})
+                    {% endif %}
+                </div>
+                <p class="text-muted small">Note : Le solde des comptes concernés sera automatiquement ajusté.</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger">Supprimer définitivement</button>
+                        <a href="{% url 'transaction_list' %}" class="btn btn-outline-secondary">Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

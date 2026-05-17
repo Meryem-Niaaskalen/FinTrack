@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Inscription | FinTrack{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h3 class="text-center mb-4">Créer un compte</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <div class="form-text small">{{ field.help_text }}</div>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary">S'inscrire</button>
+                    </div>
+                </form>
+                <div class="text-center mt-3">
+                    <small class="text-muted">Déjà un compte ? <a href="{% url 'login' %}">Connectez-vous</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Ajout automatique des classes Bootstrap aux champs du formulaire
+    document.querySelectorAll('input').forEach(input => {
+        if (input.type !== 'checkbox') {
+            input.classList.add('form-control');
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}Mes Transactions | FinTrack{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Flux Financiers</h2>
+    <div>
+        <a href="{% url 'export_transactions_csv' %}" class="btn btn-outline-secondary me-2">
+            <i class="fas fa-file-export"></i> Exporter
+        </a>
+        <a href="{% url 'recurring_create' %}" class="btn btn-outline-info me-2">
+            <i class="fas fa-redo"></i> Récurrence
+        </a>
+        <a href="{% url 'transfer_create' %}" class="btn btn-outline-primary me-2">
+            <i class="fas fa-exchange-alt"></i> Virement
+        </a>
+        <a href="{% url 'transaction_create' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Transaction
+        </a>
+    </div>
+</div>
+
+<!-- Filtres -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-3">
+                <input type="text" name="q" class="form-control" placeholder="Rechercher..." value="{{ request.GET.q }}">
+            </div>
+            <div class="col-md-2">
+                <select name="category" class="form-select">
+                    <option value="">Toutes catégories</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="start_date" class="form-control" value="{{ request.GET.start_date }}">
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
+            </div>
+            <div class="col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-outline-primary flex-grow-1">Filtrer</button>
+                <a href="{% url 'transaction_list' %}" class="btn btn-outline-secondary">Réinitialiser</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs mb-4" id="transactionTabs" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="transactions-tab" data-bs-toggle="tab" data-bs-target="#transactions" type="button" role="tab">Transactions</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="transfers-tab" data-bs-toggle="tab" data-bs-target="#transfers" type="button" role="tab">Virements</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="recurring-tab" data-bs-toggle="tab" data-bs-target="#recurring" type="button" role="tab">Récurrences</button>
+  </li>
+</ul>
+
+<div class="tab-content" id="transactionTabsContent">
+  <!-- Transactions Tab -->
+  <div class="tab-pane fade show active" id="transactions" role="tabpanel">
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Catégorie</th>
+                            <th>Compte</th>
+                            <th>Description</th>
+                            <th class="text-end">Montant</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.date }}</td>
+                            <td><span class="badge bg-light text-dark border">{{ transaction.category.name|default:"-" }}</span></td>
+                            <td>{{ transaction.account.name }}</td>
+                            <td>{{ transaction.description|truncatechars:30 }}</td>
+                            <td class="text-end fw-bold {% if transaction.type == 'expense' %}text-danger{% else %}text-success{% endif %}">
+                                {% if transaction.type == 'expense' %}-{% else %}+{% endif %}{{ transaction.amount|floatformat:2 }} MAD
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'transaction_edit' transaction.pk %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'transaction_delete' transaction.pk %}" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4">Aucune transaction trouvée.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Transfers Tab -->
+  <div class="tab-pane fade" id="transfers" role="tabpanel">
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>De</th>
+                            <th>Vers</th>
+                            <th>Description</th>
+                            <th class="text-end">Montant</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transfer in transfers %}
+                        <tr>
+                            <td>{{ transfer.date }}</td>
+                            <td>{{ transfer.from_account.name }}</td>
+                            <td>{{ transfer.to_account.name }}</td>
+                            <td>{{ transfer.description|truncatechars:30 }}</td>
+                            <td class="text-end fw-bold text-info">
+                                {{ transfer.amount|floatformat:2 }} MAD
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'transfer_delete' transfer.pk %}" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4">Aucun virement trouvé.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Recurring Tab -->
+  <div class="tab-pane fade" id="recurring" role="tabpanel">
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Description</th>
+                            <th>Fréquence</th>
+                            <th>Compte</th>
+                            <th>Montant</th>
+                            <th>Prochaine date</th>
+                            <th class="text-center">Statut</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rec in recurring_transactions %}
+                        <tr>
+                            <td>{{ rec.description }}</td>
+                            <td>{{ rec.get_frequency_display }}</td>
+                            <td>{{ rec.account.name }}</td>
+                            <td class="fw-bold {% if rec.type == 'expense' %}text-danger{% else %}text-success{% endif %}">
+                                {{ rec.amount|floatformat:2 }} MAD
+                            </td>
+                            <td>{{ rec.next_date }}</td>
+                            <td class="text-center">
+                                {% if rec.is_active %}
+                                    <span class="badge bg-success">Actif</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Inactif</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'recurring_delete' rec.pk %}" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center py-4">Aucune transaction récurrente planifiée.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

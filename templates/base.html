@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}FinTrack{% endblock %}</title>
+
+    <!-- Bootswatch Minty Theme -->
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/minty/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg bg-primary mb-4" data-bs-theme="dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'dashboard' %}">FinTrack</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'analytics' %}">Analyses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'transaction_list' %}">Transactions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_list' %}">Comptes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'budget_list' %}">Budgets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'goal_list' %}">Objectifs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'badge_list' %}">Badges</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    {% if not user.is_staff %}
+                    <li class="nav-item">
+                        <span class="nav-link text-white">Bonjour, {{ user.username }}</span>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'logout' %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link">Déconnexion</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% block scripts %}{% endblock %}
+
+</body>
+</html>

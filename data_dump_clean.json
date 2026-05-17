@@ -1,0 +1,483 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2026-05-05T15:33:57.229Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "birthdays",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$se1iwABvkpKIV2g7KICHEH$BQ/3EUuOtc+D4jpofjv2tc/7KHqaP3YZWYFDSNnkaYM=",
+    "last_login": "2026-05-16T17:27:50.107Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@example.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-04-21T10:27:48.774Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$aIDb0U92hFghqW8eOs6onx$IHfAKybGQEzuHDy5r+/TBuwl5+WhSkAQowHxxDa+HDo=",
+    "last_login": "2026-05-16T21:42:09.281Z",
+    "is_superuser": false,
+    "username": "meryem",
+    "first_name": "",
+    "last_name": "",
+    "email": "meryem.mery202218@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-05T16:33:05.477Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "5cvvuqv1fgbpk9nzf0osukugifd1mryu",
+  "fields": {
+    "session_data": ".eJxVjLsOgzAMAP_FcxVhkwTK2J1viGzHKbQVSDymqv9eITG0693p3pB434a0r7akMUMHCJdfJqxPmw6RHzzdZ6fztC2juCNxp11dP2d73c72bzDwOkAHLZK0pozhSo2hFG1Jo3j2gVWjEXkJtQSkusQKc64r9lVpLFpGTxE-X-sWN-M:1wFDDA:pU_FIvR8wLe05uUUJmpSYqiGimGBY4O7TJTUfopSgxg",
+    "expire_date": "2026-05-05T15:40:28.254Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "e6go1q7e9pn16v9cbdus2e8vs8m7wana",
+  "fields": {
+    "session_data": ".eJxVjLsOgzAMAP_FcxVhkwTK2J1viGzHKbQVSDymqv9eITG0693p3pB434a0r7akMUMHCJdfJqxPmw6RHzzdZ6fztC2juCNxp11dP2d73c72bzDwOkAHLZK0pozhSo2hFG1Jo3j2gVWjEXkJtQSkusQKc64r9lVpLFpGTxE-X-sWN-M:1wFDD8:KDJPmdXxxaDJIdE56O77QVEHW5chzU-mF6OFPKoJGJ8",
+    "expire_date": "2026-05-05T15:40:26.503Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "lrquxeq8gw3og4xp8x09e65ytg7gmp89",
+  "fields": {
+    "session_data": ".eJxVjMsKwjAQAP9lzxLyzrZH7_2GkuxGU5UEmvYk_rsUetDrzDBvmOO-lXnveZ0XhhE0XH5ZivTM9RD8iPXeBLW6rUsSRyJO28XUOL-uZ_s3KLEXGEEh023IIaCioCVFDNkktB7RSSZC9AkdOfI2eTLIbvDRm2ATa8lBwecL4G83lA:1wOMlt:pbX90WuajJeNyC6tX8lWp9x3mdXolkkUDLGmW1RTIp8",
+    "expire_date": "2026-05-30T21:42:09.291Z"
+  }
+},
+{
+  "model": "users.profile",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "first_name": "Admin",
+    "last_name": "User",
+    "address": "",
+    "points": 20,
+    "level": 1,
+    "streak": 1,
+    "last_active_date": "2026-05-05",
+    "max_streak": 1
+  }
+},
+{
+  "model": "users.profile",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "first_name": "meryem",
+    "last_name": "",
+    "address": "",
+    "points": 50,
+    "level": 1,
+    "streak": 1,
+    "last_active_date": "2026-05-11",
+    "max_streak": 1
+  }
+},
+{
+  "model": "accounts.account",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "name": "Meryem",
+    "type": "bank",
+    "balance": "11700.00"
+  }
+},
+{
+  "model": "accounts.account",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "name": "Meryem",
+    "type": "bank",
+    "balance": "14699.99"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 1,
+  "fields": {
+    "name": "birthdays",
+    "type": "income"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 2,
+  "fields": {
+    "name": "Salaire",
+    "type": "income"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 3,
+  "fields": {
+    "name": "Cadeau",
+    "type": "income"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 4,
+  "fields": {
+    "name": "IntÚrÛts",
+    "type": "income"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 5,
+  "fields": {
+    "name": "Vente",
+    "type": "income"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 6,
+  "fields": {
+    "name": "Autre (Revenu)",
+    "type": "income"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 7,
+  "fields": {
+    "name": "Alimentation",
+    "type": "expense"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 8,
+  "fields": {
+    "name": "Transport",
+    "type": "expense"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 9,
+  "fields": {
+    "name": "Loyer",
+    "type": "expense"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 10,
+  "fields": {
+    "name": "Divertissement",
+    "type": "expense"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 11,
+  "fields": {
+    "name": "SantÚ",
+    "type": "expense"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 12,
+  "fields": {
+    "name": "Services publics",
+    "type": "expense"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 13,
+  "fields": {
+    "name": "Shopping",
+    "type": "expense"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 14,
+  "fields": {
+    "name": "╔ducation",
+    "type": "expense"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 15,
+  "fields": {
+    "name": "Autre (DÚpense)",
+    "type": "expense"
+  }
+},
+{
+  "model": "transactions.category",
+  "pk": 16,
+  "fields": {
+    "name": "╔pargne",
+    "type": "expense"
+  }
+},
+{
+  "model": "transactions.transaction",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "account": 1,
+    "category": 1,
+    "type": "income",
+    "amount": "5000.00",
+    "description": "gift",
+    "date": "2026-05-05"
+  }
+},
+{
+  "model": "transactions.transaction",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "account": 1,
+    "category": 1,
+    "type": "expense",
+    "amount": "2300.00",
+    "description": "abcd",
+    "date": "2026-05-05"
+  }
+},
+{
+  "model": "transactions.transaction",
+  "pk": 3,
+  "fields": {
+    "user": 2,
+    "account": 2,
+    "category": 2,
+    "type": "income",
+    "amount": "12000.00",
+    "description": "",
+    "date": "2026-05-11"
+  }
+},
+{
+  "model": "transactions.transaction",
+  "pk": 4,
+  "fields": {
+    "user": 2,
+    "account": 2,
+    "category": 14,
+    "type": "expense",
+    "amount": "5000.00",
+    "description": "",
+    "date": "2026-05-11"
+  }
+},
+{
+  "model": "transactions.transaction",
+  "pk": 5,
+  "fields": {
+    "user": 2,
+    "account": 2,
+    "category": 16,
+    "type": "expense",
+    "amount": "2000.00",
+    "description": "╔pargne pour : PC",
+    "date": "2026-05-11"
+  }
+},
+{
+  "model": "transactions.transaction",
+  "pk": 6,
+  "fields": {
+    "user": 2,
+    "account": 2,
+    "category": 3,
+    "type": "income",
+    "amount": "699.99",
+    "description": "gift for an ann",
+    "date": "2026-05-11"
+  }
+},
+{
+  "model": "budgets.budget",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "category": 8,
+    "amount": "500.00",
+    "month": 5,
+    "year": 2026
+  }
+},
+{
+  "model": "goals.savinggoal",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "name": "PC",
+    "target_amount": "8000.00",
+    "current_amount": "2400.00",
+    "deadline": "2026-06-02",
+    "is_completed": false
+  }
+},
+{
+  "model": "gamification.badge",
+  "pk": 1,
+  "fields": {
+    "name": "DÚbutant Úconome",
+    "description": "A atteint 50 points",
+    "icon": "fas fa-seedling",
+    "points_required": 50
+  }
+},
+{
+  "model": "gamification.badge",
+  "pk": 2,
+  "fields": {
+    "name": "╔cureuil prudent",
+    "description": "A atteint 150 points",
+    "icon": "fas fa-piggy-bank",
+    "points_required": 150
+  }
+},
+{
+  "model": "gamification.badge",
+  "pk": 3,
+  "fields": {
+    "name": "Gestionnaire averti",
+    "description": "A atteint 300 points",
+    "icon": "fas fa-briefcase",
+    "points_required": 300
+  }
+},
+{
+  "model": "gamification.badge",
+  "pk": 4,
+  "fields": {
+    "name": "Expert financier",
+    "description": "A atteint 600 points",
+    "icon": "fas fa-chart-line",
+    "points_required": 600
+  }
+},
+{
+  "model": "gamification.badge",
+  "pk": 5,
+  "fields": {
+    "name": "Ma¯tre du budget",
+    "description": "A atteint 1000 points",
+    "icon": "fas fa-crown",
+    "points_required": 1000
+  }
+},
+{
+  "model": "gamification.badge",
+  "pk": 6,
+  "fields": {
+    "name": "SÚrie de feu",
+    "description": "DÚbloquÚ aprÞs une activitÚ rÚguliÞre",
+    "icon": "fas fa-fire",
+    "points_required": 200
+  }
+},
+{
+  "model": "gamification.userbadge",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "badge": 1,
+    "date_unlocked": "2026-05-11T09:58:28.585Z"
+  }
+},
+{
+  "model": "gamification.pointhistory",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "points": 10,
+    "reason": "Nouvelle transaction ajoutÚe",
+    "date": "2026-05-05T15:34:25.151Z"
+  }
+},
+{
+  "model": "gamification.pointhistory",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "points": 10,
+    "reason": "Nouvelle transaction ajoutÚe",
+    "date": "2026-05-05T15:47:07.375Z"
+  }
+},
+{
+  "model": "gamification.pointhistory",
+  "pk": 3,
+  "fields": {
+    "user": 2,
+    "points": 10,
+    "reason": "Nouvelle transaction ajoutÚe",
+    "date": "2026-05-11T08:20:45.041Z"
+  }
+},
+{
+  "model": "gamification.pointhistory",
+  "pk": 4,
+  "fields": {
+    "user": 2,
+    "points": 10,
+    "reason": "Nouvelle transaction ajoutÚe",
+    "date": "2026-05-11T08:21:45.867Z"
+  }
+},
+{
+  "model": "gamification.pointhistory",
+  "pk": 5,
+  "fields": {
+    "user": 2,
+    "points": 20,
+    "reason": "Contribution Ó l'objectif : PC",
+    "date": "2026-05-11T08:23:36.168Z"
+  }
+},
+{
+  "model": "gamification.pointhistory",
+  "pk": 6,
+  "fields": {
+    "user": 2,
+    "points": 10,
+    "reason": "Nouvelle transaction ajoutÚe",
+    "date": "2026-05-11T09:58:28.575Z"
+  }
+}
+]

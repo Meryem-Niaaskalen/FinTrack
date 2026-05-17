@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Mes Badges et Points | FinTrack{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h2 class="mb-4">Récompenses et Badges</h2>
+        <div class="row">
+            {% for badge in all_badges %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 {% if badge.pk in unlocked_badges %}border-warning{% else %}opacity-75{% endif %}">
+                    <div class="card-body text-center">
+                        <i class="{{ badge.icon }} fa-3x mb-3 {% if badge.pk in unlocked_badges %}text-warning{% else %}text-muted{% endif %}"></i>
+                        <h5 class="card-title">{{ badge.name }}</h5>
+                        <p class="card-text small">{{ badge.description }}</p>
+                        {% if badge.pk not in unlocked_badges %}
+                            <span class="badge bg-secondary">Requis : {{ badge.points_required }} pts</span>
+                        {% else %}
+                            <span class="badge bg-success">Débloqué !</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>Aucun badge disponible.</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <h2 class="mb-4">Historique des points</h2>
+        <div class="card shadow-sm">
+            <ul class="list-group list-group-flush">
+                {% for history in point_history %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="fw-bold">{{ history.reason }}</div>
+                        <div class="text-muted small">{{ history.date|date:"d/m/Y H:i" }}</div>
+                    </div>
+                    <span class="badge bg-info text-dark">+{{ history.points }}</span>
+                </li>
+                {% empty %}
+                <li class="list-group-item text-center">Aucun point gagné pour le moment.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Mes Objectifs | FinTrack{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Mes Objectifs d'Épargne</h2>
+    <a href="{% url 'goal_create' %}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Créer un objectif
+    </a>
+</div>
+
+<div class="row">
+    {% for goal in goals %}
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ goal.name }}</h5>
+                <p class="text-muted small">Échéance : {{ goal.deadline }}</p>
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="fw-bold text-primary">{{ goal.current_amount|floatformat:2 }} MAD</span>
+                    <span class="text-muted">sur {{ goal.target_amount|floatformat:2 }} MAD</span>
+                </div>
+                <div class="progress mb-3" style="height: 15px;">
+                    <div class="progress-bar bg-success" role="progressbar" 
+                         style="width: {% if goal.target_amount > 0 %}{% widthratio goal.current_amount goal.target_amount 100 %}{% else %}0{% endif %}%;" 
+                         aria-valuenow="{{ goal.current_amount }}" aria-valuemin="0" aria-valuemax="{{ goal.target_amount }}">
+                        {% if goal.target_amount > 0 %}{% widthratio goal.current_amount goal.target_amount 100 %}%{% endif %}
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <a href="{% url 'goal_contribution' goal.pk %}" class="btn btn-sm btn-success me-2">
+                            <i class="fas fa-hand-holding-usd"></i> Épargner
+                        </a>
+                    </div>
+                    <div>
+                        <a href="{% url 'goal_edit' goal.pk %}" class="btn btn-sm btn-outline-primary me-2">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url 'goal_delete' goal.pk %}" class="btn btn-sm btn-outline-danger">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">
+            Aucun objectif défini. <a href="{% url 'goal_create' %}" class="alert-link">Commencez à épargner aujourd'hui !</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

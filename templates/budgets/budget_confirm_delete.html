@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Supprimer le budget | FinTrack{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-danger text-white fw-bold">
+                Confirmer la suppression
+            </div>
+            <div class="card-body">
+                <p>Êtes-vous sûr de vouloir supprimer ce budget ?</p>
+                <div class="alert alert-warning">
+                    <strong>{{ budget }}</strong>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger">Supprimer définitivement</button>
+                        <a href="{% url 'budget_list' %}" class="btn btn-outline-secondary">Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

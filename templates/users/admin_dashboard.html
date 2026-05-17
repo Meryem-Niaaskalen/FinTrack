@@ -1,0 +1,126 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Admin Dashboard | FinTrack{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h2><i class="fas fa-user-shield me-2 text-danger"></i> Administration FinTrack</h2>
+    <p class="text-muted">Aperçu global de la plateforme et statistiques utilisateurs.</p>
+</div>
+
+<!-- Stats Globales -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white shadow-sm border-0">
+            <div class="card-body">
+                <h6 class="text-uppercase small">Utilisateurs Totaux</h6>
+                <div class="h3 fw-bold">{{ total_users }}</div>
+                <div class="small">{{ active_users }} actifs</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white shadow-sm border-0">
+            <div class="card-body">
+                <h6 class="text-uppercase small">Solde Global (Cumulé)</h6>
+                <div class="h3 fw-bold">{{ total_global_balance|floatformat:2 }} MAD</div>
+                <div class="small">Tous les comptes</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark shadow-sm border-0">
+            <div class="card-body">
+                <h6 class="text-uppercase small">Engagement (Niveau Moyen)</h6>
+                <div class="h3 fw-bold">{{ avg_level|floatformat:2 }}</div>
+                <div class="small">{{ total_badges_awarded }} badges décernés</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white shadow-sm border-0">
+            <div class="card-body">
+                <h6 class="text-uppercase small">Flux Global (Total)</h6>
+                <div class="h3 fw-bold">{{ total_global_income|floatformat:2 }} MAD</div>
+                <div class="small">Revenus enregistrés</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Graphique: Répartition par Niveau -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white fw-bold">
+                <i class="fas fa-users me-2 text-primary"></i> Répartition des Utilisateurs par Niveau
+            </div>
+            <div class="card-body">
+                <div style="height: 300px;">
+                    <canvas id="levelChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphique: Revenus vs Dépenses Globaux -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white fw-bold">
+                <i class="fas fa-exchange-alt me-2 text-info"></i> Flux Financiers Globaux (Toutes catégories)
+            </div>
+            <div class="card-body">
+                <div style="height: 300px;">
+                    <canvas id="globalFlowChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // 1. Graphique des Niveaux (Barres)
+    const levelCtx = document.getElementById('levelChart').getContext('2d');
+    new Chart(levelCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ level_labels|safe }},
+            datasets: [{
+                label: 'Nombre d\'utilisateurs',
+                data: {{ level_counts|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgb(54, 162, 235)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, ticks: { stepSize: 1 } }
+            }
+        }
+    });
+
+    // 2. Graphique Flux Globaux (Pie)
+    const flowCtx = document.getElementById('globalFlowChart').getContext('2d');
+    new Chart(flowCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ type_labels|safe }},
+            datasets: [{
+                data: {{ type_values|safe }},
+                backgroundColor: ['#2ECC71', '#E74C3C'],
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+{% endblock %}
