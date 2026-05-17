@@ -123,3 +123,6 @@ local_settings.py
 */migrations/*.py
 */migrations/*.pyc
 !*/migrations/__init__.py
+
+# Data dumps
+data_dump*.json
